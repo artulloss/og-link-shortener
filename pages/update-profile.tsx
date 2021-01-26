@@ -121,6 +121,6 @@ export default PrivateRoute(UpdateProfile);
 
 export async function getStaticProps(context) {
   return {
-    props: { needsAuthProvider: true }, // will be passed to the page component as props
+    props: { needsAuthProvider: true, routeData: { title: "Update Profile" } }, // will be passed to the page component as props
   };
 }

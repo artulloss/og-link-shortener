@@ -117,6 +117,6 @@ export default PrivateRoute(CreateLink);
 
 export async function getStaticProps(context) {
   return {
-    props: { needsAuthProvider: true }, // will be passed to the page component as props
+    props: { needsAuthProvider: true, routeData: { title: "New Link" } }, // will be passed to the page component as props
   };
 }

@@ -16,6 +16,7 @@ export default function Link({ linkData }) {
   return linkData ? (
     <>
       <NextSeo
+        title={linkData.title}
         openGraph={{
           type: "website",
           url: linkData.url,

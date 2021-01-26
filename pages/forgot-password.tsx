@@ -62,6 +62,6 @@ export default ForgotPassword;
 
 export async function getStaticProps(context) {
   return {
-    props: { needsAuthProvider: true }, // will be passed to the page component as props
+    props: { needsAuthProvider: true, routeData: { title: "Forgot Password" } }, // will be passed to the page component as props
   };
 }

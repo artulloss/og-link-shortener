@@ -102,6 +102,6 @@ export default function SignUp() {
 
 export async function getStaticProps(context) {
   return {
-    props: { needsAuthProvider: true }, // will be passed to the page component as props
+    props: { needsAuthProvider: true, routeData: { title: "Sign Up" } }, // will be passed to the page component as props
   };
 }
