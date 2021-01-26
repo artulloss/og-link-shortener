@@ -35,7 +35,6 @@ const CreateLink = () => {
       })
       .then(
         () => {
-          console.log("I HAPPENED");
           links
             .add({
               url: urlRef.current.value,
