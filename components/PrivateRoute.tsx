@@ -11,7 +11,7 @@ const PrivateRoute = (Component, fallbackRoute = "/login?redirected=true") => {
   return () => {
     const { currentUser } = useAuth();
     const router = useRouter();
-    console.log({ currentUser });
+    //console.log({ currentUser });
     if (!currentUser) {
       router.replace(fallbackRoute);
       return <p>Redirecting...</p>;

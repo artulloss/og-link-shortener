@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 
-console.log("KEY", process.env["FIREBASE_API_KEY"]);
+//console.log("KEY", process.env["FIREBASE_API_KEY"]);
 
 const cfg = {
   apiKey: process.env["NEXT_PUBLIC_FIREBASE_API_KEY"],

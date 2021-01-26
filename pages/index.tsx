@@ -11,7 +11,7 @@ import { db } from "../firebase";
 const Dashboard = () => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  console.log("AUTH", useAuth());
+  //console.log("AUTH", useAuth());
   const { currentUser, logout } = useAuth();
   const router = useRouter();
 

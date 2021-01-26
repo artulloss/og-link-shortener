@@ -15,20 +15,6 @@ export default function Link({ linkData }) {
   `;
   return linkData ? (
     <>
-      <NextSeo
-        title={linkData.title}
-        openGraph={{
-          type: "website",
-          url: linkData.url,
-          title: linkData.title,
-          description: linkData.description,
-          images: [
-            {
-              url: linkData.image,
-            },
-          ],
-        }}
-      />
       <Card>
         <Card.Body>
           <p className="text-center">Redirecting...</p>
@@ -43,9 +29,9 @@ export default function Link({ linkData }) {
 
 // This gets called on every request
 export async function getServerSideProps({ query }) {
-  console.log("QUERY", query);
+  //console.log("QUERY", query);
   const { link } = query;
-  console.log("LINK", link);
+  //console.log("LINK", link);
 
   // // Fetch data from our database
   const querySnapshot = await db
@@ -57,7 +43,7 @@ export async function getServerSideProps({ query }) {
     if (!/^https?:\/\//i.test(linkData.url)) {
       linkData.url = "http://" + linkData.url;
     }
-    return { props: { linkData } };
+    return { props: { linkData, routeData: { ...linkData } } };
   }
 
   // Null if we couldn't get anything from the database
