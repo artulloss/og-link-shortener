@@ -120,6 +120,6 @@ export default PrivateRoute(Dashboard);
 
 export async function getServerSideProps(context) {
   return {
-    props: { needsAuthProvider: true, routeData: { title: "My Links" } }, // will be passed to the page component as props
+    props: { needsAuthProvider: true }, // will be passed to the page component as props
   };
 }
