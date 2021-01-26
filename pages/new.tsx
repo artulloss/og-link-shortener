@@ -30,38 +30,34 @@ const CreateLink = () => {
       .get()
       .then((querySnapshot) => {
         if (querySnapshot.size !== 0) {
-          return Promise.reject(`Shortlink ${shortLink} is taken`);
+          setError(`Shortlink ${shortLink} is taken`);
         }
       })
-      .then(
-        () => {
-          links
-            .add({
-              url: urlRef.current.value,
-              link: shortLink,
-              title: titleRef.current.value,
-              description: descriptionRef.current.value,
-              image: imageRef.current.value,
-              user: currentUser.uid,
-            })
-            .then((/*docRef*/) => {
-              const url = `${window.location.host}/${shortLink}`;
-              if (copy(url)) {
-                setMessage("Success, copied to clipboard!");
-              } else {
-                setMessage("Success, created at " + url);
-              }
-              //console.log("Document written with ID: ", docRef.id);
-              setLoading(false);
-            })
-            .catch(function (error) {
-              console.error("Error adding document: ", error);
-            });
-        },
-        (e: string) => {
-          setError(e);
-        }
-      );
+      .then(() => {
+        links
+          .add({
+            url: urlRef.current.value,
+            link: shortLink,
+            title: titleRef.current.value,
+            description: descriptionRef.current.value,
+            image: imageRef.current.value,
+            user: currentUser.uid,
+          })
+          .then((/*docRef*/) => {
+            const url = `${window.location.host}/${shortLink}`;
+            if (!error) return;
+            if (copy(url)) {
+              setMessage("Success, copied to clipboard!");
+            } else {
+              setMessage("Success, created at " + url);
+            }
+            //console.log("Document written with ID: ", docRef.id);
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error);
+          });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
