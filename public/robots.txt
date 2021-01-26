@@ -1,0 +1,4 @@
+# Open Graph Link Shortener
+# Github @artulloss
+User-Agent: *
+Disallow:

@@ -16,6 +16,10 @@ function MyApp({ Component, pageProps }) {
       <div className="w-100 mt-5" style={{ maxWidth: "400px" }}>
         <NextSeo
           title={(routeData && routeData.title) || "Open Graph Link Shortener"}
+          description={
+            (routeData && routeData.description) ||
+            "Shorten your links and use custom social previews!"
+          }
           openGraph={{
             type: "website",
             title:
