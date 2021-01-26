@@ -14,3 +14,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* Make things look like links */
+.link {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
