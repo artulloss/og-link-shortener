@@ -7,6 +7,7 @@ import copy from "copy-to-clipboard";
 import { useAuth } from "../contexts/AuthContext";
 import PrivateRoute from "../components/PrivateRoute";
 import { db } from "../firebase";
+import { DefaultMeta } from "./_app";
 
 const Dashboard = () => {
   const [error, setError] = useState("");
@@ -36,10 +37,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     db.collection("links")
-      .where("user", "==", currentUser.uid)
+      .where("user", "==", currentUser.uid) // TODO When testing security rules uncomment this for error if working correctly
       .get()
       .then(({ docs }) => {
-        setLinks((links) => [...links, ...docs.map((d) => d.data())]);
+        setLinks((links) => [
+          ...links,
+          ...docs.map((d) => ({ ...d.data(), link: d.id })),
+        ]);
       })
       .catch((e) => {
         setError("Failed to fetch links");
@@ -62,9 +66,9 @@ const Dashboard = () => {
                 style={{ maxWidth: "540px" }}
               >
                 <div className="row no-gutters">
-                  <div className="col-md-4 d-flex">
+                  <div className="col-md-4 d-flex align-items-center">
                     <img
-                      src={link.image}
+                      src={link.image || DefaultMeta.image}
                       className="card-img"
                       alt={link.title}
                     />
@@ -83,7 +87,7 @@ const Dashboard = () => {
                           }
                           className="card-title link"
                         >
-                          {link.title}
+                          {link.title || DefaultMeta.title}
                         </h5>
 
                         <Link href={"/edit?link=" + link.link}>
@@ -91,9 +95,15 @@ const Dashboard = () => {
                         </Link>
                       </span>
 
-                      <p className="card-text">{link.description}</p>
+                      <p className="card-text">
+                        {link.description || DefaultMeta.description}
+                      </p>
                     </div>
                   </div>
+                  <p className="text-center w-100 px-3">
+                    <hr />
+                    {link.url}
+                  </p>
                 </div>
               </div>
             );

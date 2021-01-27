@@ -34,18 +34,12 @@ export async function getServerSideProps({ query }) {
   //console.log("LINK", link);
 
   // // Fetch data from our database
-  const querySnapshot = await db
-    .collection("links")
-    .where("link", "==", link)
-    .get();
-  for (const doc of querySnapshot.docs) {
-    let linkData = doc.data();
-    if (!/^https?:\/\//i.test(linkData.url)) {
-      linkData.url = "http://" + linkData.url;
-    }
-    return { props: { linkData, routeData: { ...linkData } } };
+  const document = await db.collection("links").doc(link).get();
+  if (!document.exists) return { props: { linkData: null } };
+  let linkData = document.data();
+  if (!/^https?:\/\//i.test(linkData.url)) {
+    linkData.url = "http://" + linkData.url;
   }
-
-  // Null if we couldn't get anything from the database
-  return { props: { linkData: null } };
+  linkData.link = link;
+  return { props: { linkData, routeData: { ...linkData } } };
 }

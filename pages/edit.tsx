@@ -21,22 +21,22 @@ const EditLink = () => {
 
   useEffect(() => {
     db.collection("links")
-      .where("link", "==", link)
-      .where("user", "==", currentUser.uid)
+      .doc(link as string)
       .get()
-      .then((querySnapshot) => {
-        if (querySnapshot.size !== 1) {
+      .then((document) => {
+        console.log({ document });
+        const data = document.data();
+        console.log({ data });
+        if (data.user !== currentUser.uid) {
           // Redirect user, they don't have access to this link
           router.replace("/");
           return;
         }
-        const doc = querySnapshot.docs[0];
-        const linkData = doc.data();
-        setDocId(doc.id);
-        urlRef.current.value = linkData.url;
-        titleRef.current.value = linkData.title;
-        descriptionRef.current.value = linkData.description;
-        imageRef.current.value = linkData.image;
+        setDocId(document.id);
+        urlRef.current.value = data.url;
+        titleRef.current.value = data.title;
+        descriptionRef.current.value = data.description;
+        imageRef.current.value = data.image;
       });
   }, []);
 
@@ -64,7 +64,7 @@ const EditLink = () => {
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Edit Shortlink</h2>
+          <h2 className="text-center mb-4">Edit Link: {docId}</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <Form onSubmit={handleSubmit}>

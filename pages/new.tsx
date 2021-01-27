@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Card, Form, Alert, Button } from "react-bootstrap";
 import Link from "next/link";
+
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import copy from "copy-to-clipboard";
@@ -16,46 +17,46 @@ const CreateLink = () => {
   const descriptionRef = useRef(null);
   const imageRef = useRef(null);
   const { currentUser } = useAuth();
-  let shortLink = "";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const link = linkRef.current.value;
+    const url = urlRef.current.value;
+    const regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+    console.log({ url }, url.match(regex));
+    if (!url.match(regex)) {
+      setError("Invalid URL");
+      return;
+    }
     setError("");
     setMessage("");
     setLoading(true);
-    const links = db.collection("links");
-    shortLink = linkRef.current.value;
-    links
-      .where("link", "==", shortLink)
+    const dbLinkRef = db.collection("links").doc(link);
+    dbLinkRef
       .get()
-      .then((querySnapshot) => {
-        if (querySnapshot.size !== 0) {
-          setError(`Shortlink ${shortLink} is taken`);
+      .then(async ({ exists }) => {
+        console.log({ exists });
+        if (exists) {
+          setError(`Link ${link} is taken`);
+          return;
         }
-      })
-      .then(() => {
-        links
-          .add({
-            url: urlRef.current.value,
-            link: shortLink,
+        try {
+          await dbLinkRef.set({
+            url: url,
             title: titleRef.current.value,
             description: descriptionRef.current.value,
             image: imageRef.current.value,
             user: currentUser.uid,
-          })
-          .then((/*docRef*/) => {
-            const url = `${window.location.host}/${shortLink}`;
-            if (!error) return;
-            if (copy(url)) {
-              setMessage("Success, copied to clipboard!");
-            } else {
-              setMessage("Success, created at " + url);
-            }
-            //console.log("Document written with ID: ", docRef.id);
-          })
-          .catch(function (error) {
-            console.error("Error adding document: ", error);
           });
+          const copyUrl = `${window.location.host}/${link}`;
+          if (copy(copyUrl)) {
+            setMessage("Success, copied to clipboard!");
+          } else {
+            setMessage("Success, created at " + copyUrl);
+          }
+        } catch {
+          console.error("Error adding document: ", error);
+        }
       })
       .finally(() => setLoading(false));
   };
@@ -64,7 +65,7 @@ const CreateLink = () => {
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Create Shortlink</h2>
+          <h2 className="text-center mb-4">Create Link</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <Form onSubmit={handleSubmit}>
@@ -73,8 +74,8 @@ const CreateLink = () => {
               <Form.Control type="text" ref={urlRef} required />
             </Form.Group>
 
-            <Form.Group id="shortlink">
-              <Form.Label>Shortlink</Form.Label>
+            <Form.Group id="link">
+              <Form.Label>Link</Form.Label>
               <Form.Control type="text" ref={linkRef} required />
             </Form.Group>
 
