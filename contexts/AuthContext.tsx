@@ -15,6 +15,7 @@ export function useAuth(): any {
 
 export enum OAuthType {
   Google,
+  Microsoft,
   Github,
 }
 
@@ -37,6 +38,9 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     switch (oauth) {
       case OAuthType.Google:
         provider = new firebase.auth.GoogleAuthProvider();
+        break;
+      case OAuthType.Microsoft:
+        provider = new firebase.auth.OAuthProvider("microsoft.com");
         break;
       case OAuthType.Github:
         provider = new firebase.auth.GithubAuthProvider();

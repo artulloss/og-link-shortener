@@ -4,7 +4,7 @@ import { useAuth, OAuthType } from "../contexts/AuthContext";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { FaGithub, FaGoogle, FaMicrosoft } from "react-icons/fa";
 
 const Login = () => {
   const emailRef = useRef(null);
@@ -69,14 +69,20 @@ const Login = () => {
               Login
             </Button>
             <span className="d-flex justify-content-center m-1">
-              <FaGithub
-                onClick={() => handleOAuth(OAuthType.Github)}
+              <FaGoogle
+                onClick={() => handleOAuth(OAuthType.Google)}
                 className={
                   (loading ? "oauth-icon-disabled" : "oauth-icon") + " mx-1"
                 }
               />
-              <FaGoogle
-                onClick={() => handleOAuth(OAuthType.Google)}
+              <FaMicrosoft
+                onClick={() => handleOAuth(OAuthType.Microsoft)}
+                className={
+                  (loading ? "oauth-icon-disabled" : "oauth-icon") + " mx-1"
+                }
+              />
+              <FaGithub
+                onClick={() => handleOAuth(OAuthType.Github)}
                 className={
                   (loading ? "oauth-icon-disabled" : "oauth-icon") + " mx-1"
                 }
