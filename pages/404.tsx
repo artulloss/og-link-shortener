@@ -1,11 +1,20 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 
 export default function NotFound() {
+  const [seconds, setSeconds] = useState(3);
+
+  setTimeout(() => {
+    if (seconds > 1) {
+      setSeconds((seconds) => seconds - 1);
+    } else {
+      window.history.back(); // Redirect back
+    }
+  }, 1000);
+
   return (
-    <div>
-      <h1>We're sorry, but you seem lost...</h1>
-      <Button onClick={() => window.history.back()}>Go back</Button>
+    <div className="w-100">
+      <h1 className="text-center">We're sorry, but you seem lost...</h1>
+      <p className="text-center">Redirecting you back in {seconds}...</p>
     </div>
   );
 }

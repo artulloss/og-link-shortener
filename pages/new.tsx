@@ -20,7 +20,8 @@ const CreateLink = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const link = linkRef.current.value;
+    const link =
+      linkRef.current.value || Math.random().toString(36).substring(7);
     const url = urlRef.current.value;
     const regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
     console.log({ url }, url.match(regex));
@@ -76,7 +77,7 @@ const CreateLink = () => {
 
             <Form.Group id="link">
               <Form.Label>Link</Form.Label>
-              <Form.Control type="text" ref={linkRef} required />
+              <Form.Control type="text" ref={linkRef} />
             </Form.Group>
 
             <Form.Group id="title">

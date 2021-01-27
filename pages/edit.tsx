@@ -24,10 +24,8 @@ const EditLink = () => {
       .doc(link as string)
       .get()
       .then((document) => {
-        console.log({ document });
         const data = document.data();
-        console.log({ data });
-        if (data.user !== currentUser.uid) {
+        if (!data || data.user !== currentUser.uid) {
           // Redirect user, they don't have access to this link
           router.replace("/");
           return;
