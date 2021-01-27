@@ -24,3 +24,27 @@ a {
 .link:hover {
   text-decoration: underline;
 }
+
+.oauth-icon {
+  height: 30px;
+  width: 7%;
+  color: #007bff;
+}
+
+.oauth-icon:hover {
+  cursor: pointer;
+  transform: rotate(360deg) scale(1.25);
+  transition: 1s;
+}
+
+.oauth-icon-disabled {
+  height: 30px;
+  width: 7%;
+  color: #3797ff;
+}
+
+.oauth-icon-disabled:hover {
+  cursor: pointer;
+  transform: none;
+  transition: none;
+}

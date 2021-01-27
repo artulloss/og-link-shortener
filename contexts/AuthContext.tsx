@@ -5,11 +5,17 @@ import React, {
   useEffect,
 } from "react";
 import { auth } from "../firebase";
+import firebase from "firebase/app";
 
 const AuthContext = React.createContext({});
 
 export function useAuth(): any {
   return useContext(AuthContext);
+}
+
+export enum OAuthType {
+  Google,
+  Github,
 }
 
 export const AuthProvider: FunctionComponent = ({ children }) => {
@@ -24,6 +30,18 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
   const login = (email: string, password: string) => {
     // Change auth here to switch from firebase to other provider :P
     return auth.signInWithEmailAndPassword(email, password);
+  };
+
+  const loginOAuth = (oauth: OAuthType) => {
+    let provider;
+    switch (oauth) {
+      case OAuthType.Google:
+        provider = new firebase.auth.GoogleAuthProvider();
+        break;
+      case OAuthType.Github:
+        provider = new firebase.auth.GithubAuthProvider();
+    }
+    return auth.signInWithPopup(provider).then((result) => console.log(result));
   };
 
   const logout = () => {
@@ -54,6 +72,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     currentUser,
     signUp,
     login,
+    loginOAuth,
     logout,
     resetPassword,
     updateEmail,
