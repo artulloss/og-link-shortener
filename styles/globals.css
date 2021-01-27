@@ -44,7 +44,7 @@ a {
 }
 
 .oauth-icon-disabled:hover {
-  cursor: pointer;
+  cursor: default;
   transform: none;
   transition: none;
 }
