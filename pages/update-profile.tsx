@@ -68,7 +68,11 @@ const UpdateProfile = () => {
                 <Form.Control
                   type={passwordVisible ? "text" : "password"}
                   ref={passwordRef}
-                  placeholder="Leave blank to keep current password"
+                  required={currentUser.isAnonymous}
+                  placeholder={
+                    !currentUser.isAnonymous &&
+                    "Leave blank to keep current password"
+                  }
                 />
                 <InputGroup.Append>
                   <InputGroup.Text
@@ -85,7 +89,11 @@ const UpdateProfile = () => {
                 <Form.Control
                   type={confirmPasswordVisible ? "text" : "password"}
                   ref={confirmPasswordRef}
-                  placeholder="Leave blank to keep current password"
+                  required={currentUser.isAnonymous}
+                  placeholder={
+                    !currentUser.isAnonymous &&
+                    "Leave blank to keep current password"
+                  }
                 />
                 <InputGroup.Append>
                   <InputGroup.Text

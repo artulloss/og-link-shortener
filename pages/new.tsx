@@ -77,7 +77,15 @@ const CreateLink = () => {
 
             <Form.Group id="link">
               <Form.Label>Link</Form.Label>
-              <Form.Control type="text" ref={linkRef} />
+              <Form.Control
+                type="text"
+                ref={linkRef}
+                disabled={currentUser.isAnonymous}
+                placeholder={
+                  currentUser.isAnonymous &&
+                  "Anonymous users can't choose their short link"
+                }
+              />
             </Form.Group>
 
             <Form.Group id="title">

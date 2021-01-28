@@ -48,6 +48,10 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     return auth.signInWithPopup(provider).then((result) => console.log(result));
   };
 
+  const loginAnonymous = () => {
+    return auth.signInAnonymously();
+  };
+
   const logout = () => {
     return auth.signOut();
   };
@@ -77,6 +81,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     signUp,
     login,
     loginOAuth,
+    loginAnonymous,
     logout,
     resetPassword,
     updateEmail,

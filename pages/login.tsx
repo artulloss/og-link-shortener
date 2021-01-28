@@ -5,11 +5,12 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { FaGithub, FaGoogle, FaMicrosoft } from "react-icons/fa";
+import SignUp from "./signup";
 
 const Login = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const { login, loginOAuth, currentUser } = useAuth();
+  const { login, loginOAuth, loginAnonymous } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -35,6 +36,12 @@ const Login = () => {
     if (loading) return;
     setLoading(true);
     loginOAuth(oauth).then(redirect, fail);
+  };
+
+  const handleAnonymousLogin = () => {
+    if (loading) return;
+    setLoading(true);
+    loginAnonymous().then(redirect, fail);
   };
 
   return (
@@ -68,39 +75,48 @@ const Login = () => {
             <Button disabled={loading} className="w-100" type="submit">
               Login
             </Button>
-            <span className="d-flex justify-content-center m-1">
-              <FaGoogle
-                onClick={() => handleOAuth(OAuthType.Google)}
-                className={
-                  (loading ? "oauth-icon-disabled" : "oauth-icon") + " mx-1"
-                }
-              />
-              <FaMicrosoft
-                onClick={() => handleOAuth(OAuthType.Microsoft)}
-                className={
-                  (loading ? "oauth-icon-disabled" : "oauth-icon") + " mx-1"
-                }
-              />
-              <FaGithub
-                onClick={() => handleOAuth(OAuthType.Github)}
-                className={
-                  (loading ? "oauth-icon-disabled" : "oauth-icon") + " mx-1"
-                }
-              />
-            </span>
           </Form>
           <div className="w-100 text-center mt-2">
+            <Link href="/signup">
+              <a>Sign up</a>
+            </Link>
+            <br />
             <Link href="/forgot-password">
               <a>Forgot password?</a>
             </Link>
           </div>
+          <hr />
+
+          <p>Socials</p>
+          <span className="d-flex justify-content-center m-1">
+            <FaGoogle
+              onClick={() => handleOAuth(OAuthType.Google)}
+              className={
+                (loading ? "oauth-icon-disabled" : "oauth-icon") + " mx-1"
+              }
+            />
+            <FaMicrosoft
+              onClick={() => handleOAuth(OAuthType.Microsoft)}
+              className={
+                (loading ? "oauth-icon-disabled" : "oauth-icon") + " mx-1"
+              }
+            />
+            <FaGithub
+              onClick={() => handleOAuth(OAuthType.Github)}
+              className={
+                (loading ? "oauth-icon-disabled" : "oauth-icon") + " mx-1"
+              }
+            />
+          </span>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        Need an account?{" "}
-        <Link href="/signup">
-          <a>Sign up</a>
-        </Link>
+        <p
+          onClick={handleAnonymousLogin}
+          className={loading ? "link-disabled" : "link"}
+        >
+          Sign in Anonymously
+        </p>
       </div>
     </>
   );

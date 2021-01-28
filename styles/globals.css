@@ -25,6 +25,11 @@ a {
   text-decoration: underline;
 }
 
+.link-disabled {
+  cursor: default;
+  color: #3797ff;
+}
+
 .oauth-icon {
   height: 30px;
   width: 7%;
