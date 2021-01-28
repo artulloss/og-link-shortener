@@ -36,7 +36,13 @@ function MyApp({ Component, pageProps }) {
   return pageProps.customLayout ? ( // Custom page layout escapes the container, keeps seo etc
     <>
       {seo}
-      <Component {...pageProps} />
+      {pageProps.needsAuthProvider ? ( // Only give us AuthProvider if the page needs it
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
+      ) : (
+        <Component {...pageProps} />
+      )}
     </>
   ) : (
     <Container

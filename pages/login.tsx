@@ -9,7 +9,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import { useAuth, OAuthType } from "../contexts/AuthContext";
+import { useAuth, OAuthType, AuthProvider } from "../contexts/AuthContext";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -170,6 +170,10 @@ export default Login;
 
 export async function getStaticProps(context) {
   return {
-    props: { customLayout: true, routeData: { title: "Login" } }, // will be passed to the page component as props
+    props: {
+      needsAuthProvider: true,
+      customLayout: true,
+      routeData: { title: "Login" },
+    }, // will be passed to the page component as props
   };
 }
