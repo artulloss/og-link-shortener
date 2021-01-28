@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { db } from "../firebase";
 import NotFound from "./404";
-import { NextSeo } from "next-seo";
 import RingLoader from "react-spinners/RingLoader";
 import { Card } from "react-bootstrap";
 
@@ -29,10 +28,7 @@ export default function Link({ linkData }) {
 
 // This gets called on every request
 export async function getServerSideProps({ query }) {
-  //console.log("QUERY", query);
   const { link } = query;
-  //console.log("LINK", link);
-
   // // Fetch data from our database
   const document = await db.collection("links").doc(link).get();
   if (!document.exists) return { props: { linkData: null } };
