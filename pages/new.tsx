@@ -83,7 +83,7 @@ const CreateLink = () => {
                 disabled={currentUser.isAnonymous}
                 placeholder={
                   currentUser.isAnonymous &&
-                  "Anonymous users can't choose their short link"
+                  "Anonymous users can't choose their link"
                 }
               />
             </Form.Group>

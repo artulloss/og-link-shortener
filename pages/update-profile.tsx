@@ -66,7 +66,7 @@ const UpdateProfile = () => {
               <Form.Label>Password</Form.Label>
               <InputGroup>
                 <Form.Control
-                  type={passwordVisible ? "text" : "password"}
+                  type={passwordVisible ? "text" : "pas sword"}
                   ref={passwordRef}
                   required={currentUser.isAnonymous}
                   placeholder={

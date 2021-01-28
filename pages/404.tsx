@@ -26,14 +26,3 @@ export default function NotFound() {
     </div>
   );
 }
-
-export async function getStaticProps(context) {
-  return {
-    props: {
-      routeData: {
-        title: "Not Found",
-        description: "We're sorry, you seem lost!",
-      },
-    }, // will be passed to the page component as props
-  };
-}

@@ -14,29 +14,37 @@ export const DefaultMeta = {
 function MyApp({ Component, pageProps }) {
   //console.log({ pageProps });
   const routeData = pageProps.routeData;
-  return (
+  const seo = (
+    <NextSeo
+      title={(routeData && routeData.title) || DefaultMeta.title}
+      description={
+        (routeData && routeData.description) || DefaultMeta.description
+      }
+      openGraph={{
+        type: "website",
+        title: (routeData && routeData.title) || DefaultMeta.title,
+        description:
+          (routeData && routeData.description) || DefaultMeta.description,
+        images: [
+          {
+            url: (routeData && routeData.image) || DefaultMeta.image,
+          },
+        ],
+      }}
+    />
+  );
+  return pageProps.customLayout ? ( // Custom page layout escapes the container, keeps seo etc
+    <>
+      {seo}
+      <Component {...pageProps} />
+    </>
+  ) : (
     <Container
       className="d-flex alight-items-center justify-content-center"
       style={{ minHeight: "100vh" }}
     >
+      {seo}
       <div className="w-100 mt-5" style={{ maxWidth: "400px" }}>
-        <NextSeo
-          title={(routeData && routeData.title) || DefaultMeta.title}
-          description={
-            (routeData && routeData.description) || DefaultMeta.description
-          }
-          openGraph={{
-            type: "website",
-            title: (routeData && routeData.title) || DefaultMeta.title,
-            description:
-              (routeData && routeData.description) || DefaultMeta.description,
-            images: [
-              {
-                url: (routeData && routeData.image) || DefaultMeta.image,
-              },
-            ],
-          }}
-        />
         {pageProps.needsAuthProvider ? ( // Only give us AuthProvider if the page needs it
           <AuthProvider>
             <Component {...pageProps} />
