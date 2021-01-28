@@ -65,7 +65,7 @@ const Dashboard = () => {
                 className="card mb-3"
                 style={{ maxWidth: "540px" }}
               >
-                <div className="row no-gutters">
+                <div className="row no-gutters" sm={1}>
                   <div className="col-md-4 d-flex align-items-center">
                     <img
                       src={link.image || DefaultMeta.image}

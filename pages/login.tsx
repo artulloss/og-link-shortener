@@ -60,7 +60,7 @@ const Login = () => {
         style={{ minHeight: "100vh" }}
       >
         <div className="w-100 mt-5" style={{ maxWidth: "900px" }}>
-          <Row>
+          <Row xs={1} md={2}>
             <Col>
               <Card className="h-100">
                 <Card.Body className="d-flex flex-column justify-content-center">
