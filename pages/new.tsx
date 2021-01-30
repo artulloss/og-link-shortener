@@ -102,6 +102,7 @@ const CreateLink = (props) => {
                 type="text"
                 onInput={(v: SyntheticEvent) => {
                   setMetaData(null);
+                  // @ts-ignore
                   setUrl((v.nativeEvent as InputEvent).target?.value);
                 }}
                 defaultValue={url}
@@ -138,6 +139,7 @@ const CreateLink = (props) => {
               <Form.Control
                 type="text"
                 onInput={(v: SyntheticEvent) => {
+                  // @ts-ignore
                   setImgUrl((v.nativeEvent as InputEvent).target?.value);
                   setAlt(""); // Clear alt
                 }}
