@@ -45,7 +45,7 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
       case OAuthType.Github:
         provider = new firebase.auth.GithubAuthProvider();
     }
-    return auth.signInWithPopup(provider).then((result) => console.log(result));
+    return auth.signInWithPopup(provider);
   };
 
   const loginAnonymous = () => {

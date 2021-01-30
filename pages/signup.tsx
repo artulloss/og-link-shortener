@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert, InputGroup } from "react-bootstrap";
+import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext";
@@ -100,8 +101,8 @@ export default function SignUp() {
   );
 }
 
-export async function getStaticProps(context) {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: { needsAuthProvider: true, routeData: { title: "Sign Up" } }, // will be passed to the page component as props
   };
-}
+};

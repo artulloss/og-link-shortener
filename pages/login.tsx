@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import { useAuth, OAuthType, AuthProvider } from "../contexts/AuthContext";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { FaGithub, FaGoogle, FaMicrosoft } from "react-icons/fa";
@@ -168,7 +169,7 @@ const Login = () => {
 
 export default Login;
 
-export async function getStaticProps(context) {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       needsAuthProvider: true,
@@ -176,4 +177,4 @@ export async function getStaticProps(context) {
       routeData: { title: "Login" },
     }, // will be passed to the page component as props
   };
-}
+};

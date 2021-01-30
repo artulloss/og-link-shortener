@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card, Alert } from "react-bootstrap";
+import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { BsGearFill } from "react-icons/bs";
@@ -100,10 +101,10 @@ const Dashboard = () => {
                       </p>
                     </div>
                   </div>
-                  <p className="text-center w-100 px-3">
+                  <span className="px-3 w-100">
                     <hr />
-                    {link.url}
-                  </p>
+                    <p className="text-center w-100">{link.url}</p>
+                  </span>
                 </div>
               </div>
             );
@@ -128,8 +129,8 @@ const Dashboard = () => {
 
 export default PrivateRoute(Dashboard);
 
-export async function getServerSideProps(context) {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: { needsAuthProvider: true }, // will be passed to the page component as props
   };
-}
+};

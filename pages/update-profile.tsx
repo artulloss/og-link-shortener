@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert, InputGroup } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
+import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
@@ -127,8 +128,8 @@ const UpdateProfile = () => {
 
 export default PrivateRoute(UpdateProfile);
 
-export async function getStaticProps(context) {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: { needsAuthProvider: true, routeData: { title: "Update Profile" } }, // will be passed to the page component as props
   };
-}
+};

@@ -3,6 +3,7 @@ import { db } from "../firebase";
 import NotFound from "./404";
 import RingLoader from "react-spinners/RingLoader";
 import { Card } from "react-bootstrap";
+import { GetServerSideProps } from "next";
 
 export default function Link({ linkData }) {
   useEffect(() => {
@@ -12,7 +13,7 @@ export default function Link({ linkData }) {
     display: block;
     margin: 0 auto;
   `;
-  return linkData ? (
+  return (
     <>
       <Card>
         <Card.Body>
@@ -21,21 +22,22 @@ export default function Link({ linkData }) {
         </Card.Body>
       </Card>
     </>
-  ) : (
-    <NotFound />
   );
 }
 
 // This gets called on every request
-export async function getServerSideProps({ query }) {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { link } = query;
-  // // Fetch data from our database
-  const document = await db.collection("links").doc(link).get();
-  if (!document.exists) return { props: { linkData: null } };
+  // Fetch data from our database
+  const document = await db
+    .collection("links")
+    .doc(link as string)
+    .get();
+  if (!document.exists) return { notFound: true };
   let linkData = document.data();
   if (!/^https?:\/\//i.test(linkData.url)) {
     linkData.url = "http://" + linkData.url;
   }
   linkData.link = link;
   return { props: { linkData, routeData: { ...linkData } } };
-}
+};

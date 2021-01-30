@@ -8,15 +8,15 @@ import { useAuth } from "../contexts/AuthContext";
  * @param fallbackRoute Redirect to if not logged in
  */
 const PrivateRoute = (Component, fallbackRoute = "/login?redirected=true") => {
-  return () => {
+  const hocComponent = ({ ...props }) => <Component {...props} />;
+  return (props) => {
     const { currentUser } = useAuth();
     const router = useRouter();
-    //console.log({ currentUser });
     if (!currentUser) {
       router.replace(fallbackRoute);
       return <p>Redirecting...</p>;
     }
-    return <Component />;
+    return hocComponent(props);
   };
 };
 

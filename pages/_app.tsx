@@ -4,6 +4,7 @@ import { AuthProvider } from "contexts/AuthContext";
 import React from "react";
 import { Container } from "react-bootstrap";
 import { NextSeo } from "next-seo";
+import type { AppProps } from "next/app";
 
 export const DefaultMeta = {
   title: "Open Graph Link Shortener",
@@ -11,7 +12,7 @@ export const DefaultMeta = {
   image: "https://ogp.me/logo.png",
 };
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   //console.log({ pageProps });
   const routeData = pageProps.routeData;
   const seo = (

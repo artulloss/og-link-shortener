@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert, InputGroup } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import Link from "next/link";
+import { GetStaticProps } from "next";
 
 const ForgotPassword = () => {
   const emailRef = useRef(null);
@@ -60,8 +61,8 @@ const ForgotPassword = () => {
 
 export default ForgotPassword;
 
-export async function getStaticProps(context) {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: { needsAuthProvider: true, routeData: { title: "Forgot Password" } }, // will be passed to the page component as props
   };
-}
+};
