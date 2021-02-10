@@ -5,6 +5,7 @@ import Link from "next/link";
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import PrivateRoute from "../components/PrivateRoute";
+import { GetStaticProps } from "next";
 
 const EditLink = () => {
   const [error, setError] = useState("");
@@ -116,7 +117,7 @@ const EditLink = () => {
 
 export default PrivateRoute(EditLink);
 
-export async function getStaticProps(context) {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       needsAuthProvider: true,

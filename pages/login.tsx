@@ -70,10 +70,11 @@ const Login = () => {
                   </h2>
                   <p>
                     Shorten links and customize the social media previews, while
-                    optionally editing them afterwards! Project source can be
-                    found{" "}
+                    optionally editing them afterwards! This project is open
+                    source and is hosted via a deployment to Vercel. Check out
+                    the project on{" "}
                     <a href="https://github.com/artulloss/og-link-shortener">
-                      here
+                      Github
                     </a>
                   </p>
                 </Card.Body>
