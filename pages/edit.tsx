@@ -5,6 +5,8 @@ import Link from "next/link";
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import PrivateRoute from "../components/PrivateRoute";
+import { GetStaticProps } from "next";
+import { TwitterPicker } from "react-color";
 
 const EditLink = () => {
   const [error, setError] = useState("");
@@ -15,6 +17,7 @@ const EditLink = () => {
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const imageRef = useRef(null);
+  const [color, setColor] = useState("");
   const { currentUser } = useAuth();
   const { link } = router.query;
   const [docId, setDocId] = useState("");
@@ -35,6 +38,7 @@ const EditLink = () => {
         titleRef.current.value = data.title;
         descriptionRef.current.value = data.description;
         imageRef.current.value = data.image;
+        setColor(data.color);
       });
   }, []);
 
@@ -51,6 +55,7 @@ const EditLink = () => {
         description: descriptionRef.current.value,
         image: imageRef.current.value,
         user: currentUser.uid,
+        color: color,
       })
       .then(() => {
         setMessage("Successfully edited!");
@@ -86,6 +91,16 @@ const EditLink = () => {
               <Form.Control type="text" ref={imageRef} />
             </Form.Group>
 
+            <Form.Group id="color">
+              <p>Color</p>
+              <TwitterPicker
+                color={color || "#FFF"}
+                onChangeComplete={({ hex }) => setColor(hex)}
+                triangle="hide"
+                width="100%"
+              />
+            </Form.Group>
+
             <div className="d-flex w-100 justify-content-center">
               <Button disabled={loading} className="m-1 w-100" type="submit">
                 Edit
@@ -116,7 +131,7 @@ const EditLink = () => {
 
 export default PrivateRoute(EditLink);
 
-export async function getStaticProps(context) {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       needsAuthProvider: true,
@@ -127,4 +142,4 @@ export async function getStaticProps(context) {
       },
     }, // will be passed to the page component as props
   };
-}
+};

@@ -6,11 +6,6 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -52,4 +47,38 @@ a {
   cursor: default;
   transform: none;
   transition: none;
+}
+
+input,
+.card,
+.alert {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px;
+}
+
+.twitter-picker > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.container-scroll-x {
+  overflow: hidden;
+  overflow-x: scroll;
+  margin-bottom: 1rem;
+}
+
+.container-scroll-x::-webkit-scrollbar {
+  height: 4px; /* height of horizontal scrollbar ← You're missing this */
+  width: 4px; /* width of vertical scrollbar */
+  border: 2px transparent;
+}
+
+.container-scroll-x::-webkit-scrollbar-thumb:horizontal {
+  background: rgba(87, 25, 255, 0.5);
+  border-radius: 2rem;
+}
+
+.container-scroll-x > * {
+  white-space: nowrap;
+  margin: 0;
 }

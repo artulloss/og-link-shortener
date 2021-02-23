@@ -60,7 +60,7 @@ const Login = () => {
         className="d-flex alight-items-center justify-content-center"
         style={{ minHeight: "100vh" }}
       >
-        <div className="w-100 mt-5" style={{ maxWidth: "900px" }}>
+        <div className="w-100 mt-5 mb-5" style={{ maxWidth: "900px" }}>
           <Row xs={1} md={2}>
             <Col>
               <Card className="h-100">
@@ -70,10 +70,11 @@ const Login = () => {
                   </h2>
                   <p>
                     Shorten links and customize the social media previews, while
-                    optionally editing them afterwards! Project source can be
-                    found{" "}
+                    optionally editing them afterwards! This project is open
+                    source and is hosted via a deployment to Vercel. Check out
+                    the project on{" "}
                     <a href="https://github.com/artulloss/og-link-shortener">
-                      here
+                      Github
                     </a>
                   </p>
                 </Card.Body>
