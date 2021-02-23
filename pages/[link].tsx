@@ -7,7 +7,7 @@ import { GetServerSideProps } from "next";
 
 export default function Link({ linkData }) {
   useEffect(() => {
-    if (window.location && linkData) window.location.replace(linkData.url);
+    //if (window.location && linkData) window.location.replace(linkData.url);
   }, [linkData]);
   const override = `
     display: block;

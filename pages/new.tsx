@@ -7,6 +7,7 @@ import copy from "copy-to-clipboard";
 import PrivateRoute from "../components/PrivateRoute";
 import ogs from "open-graph-scraper";
 import { GetServerSideProps } from "next";
+import { TwitterPicker } from "react-color";
 
 const validUrl = (url: string) => {
   const regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
@@ -15,12 +16,15 @@ const validUrl = (url: string) => {
 
 const CreateLink = (props) => {
   const [metaData, setMetaData] = useState(props.metaData);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(
+    (props.metaData && props.metaData.error) || ""
+  );
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [alt, setAlt] = useState("");
+  const [color, setColor] = useState("");
   const linkRef = useRef(null);
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
@@ -59,14 +63,16 @@ const CreateLink = (props) => {
           setError(`Link ${link} is taken`);
           return;
         }
+        let data = {
+          url: url,
+          title: titleRef.current.value,
+          description: descriptionRef.current.value,
+          image: imgUrl,
+          user: currentUser.uid,
+        };
+        if (color) data["color"] = color;
         try {
-          await dbLinkRef.set({
-            url: url,
-            title: titleRef.current.value,
-            description: descriptionRef.current.value,
-            image: imgUrl,
-            user: currentUser.uid,
-          });
+          await dbLinkRef.set(data);
           const copyUrl = `${window.location.host}/${link}`;
           if (copy(copyUrl)) {
             setMessage("Success, copied to clipboard!");
@@ -151,6 +157,7 @@ const CreateLink = (props) => {
               <>
                 <p>Image Preview</p>
                 <img
+                  className="mb-3"
                   src={imgUrl}
                   onError={(e) => setAlt("Image is invalid or corrupted")}
                   alt={alt}
@@ -159,9 +166,19 @@ const CreateLink = (props) => {
               </>
             )}
 
+            <Form.Group id="color">
+              <p>Color</p>
+              <TwitterPicker
+                color={color || "#FFF"}
+                onChangeComplete={({ hex }) => setColor(hex)}
+                triangle="hide"
+                width="100%"
+              />
+            </Form.Group>
+
             <div className="d-flex">
               <Button
-                disabled={metaData}
+                disabled={metaData && !metaData.error}
                 variant="warning "
                 className="w-100 m-3"
                 onClick={handleScrape}
@@ -199,8 +216,26 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       }, // will be passed to the page component as props
     };
 
-  const data = await ogs({ url });
-  const metaData = data.result;
+  let data = null; // Undefined cannot be json serialized
+  let errorMsg = "Well that was unexpected... 🤔";
+  try {
+    data = await ogs({
+      url,
+      customMetaTags: [
+        {
+          multiple: false, // is there more then one of these tags on a page (normally this is false)
+          property: "theme-color",
+          fieldName: "themeColor", // name of the result variable
+        },
+      ],
+    });
+  } catch (e) {
+    errorMsg = (e.result && e.result.error) || errorMsg; // I mean rather be safe than sorry, but this should not happen
+  }
+
+  console.log(data);
+
+  const metaData = (data && data.result) || { error: errorMsg };
   return {
     props: {
       metaData,

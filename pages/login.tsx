@@ -60,7 +60,7 @@ const Login = () => {
         className="d-flex alight-items-center justify-content-center"
         style={{ minHeight: "100vh" }}
       >
-        <div className="w-100 mt-5" style={{ maxWidth: "900px" }}>
+        <div className="w-100 mt-5 mb-5" style={{ maxWidth: "900px" }}>
           <Row xs={1} md={2}>
             <Col>
               <Card className="h-100">

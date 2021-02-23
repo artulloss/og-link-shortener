@@ -95,7 +95,6 @@ const Dashboard = () => {
                           <BsGearFill />
                         </Link>
                       </span>
-
                       <p className="card-text">
                         {link.description || DefaultMeta.description}
                       </p>
@@ -103,7 +102,9 @@ const Dashboard = () => {
                   </div>
                   <span className="px-3 w-100">
                     <hr />
-                    <p className="text-center w-100">{link.url}</p>
+                    <div className="container-scroll-x">
+                      <p className="text-center w-100">{link.url}</p>
+                    </div>
                   </span>
                 </div>
               </div>

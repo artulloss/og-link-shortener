@@ -10,10 +10,11 @@ export const DefaultMeta = {
   title: "Open Graph Link Shortener",
   description: "Shorten your links and use custom social previews!",
   image: "https://ogp.me/logo.png",
+  color: "#007bff",
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  //console.log({ pageProps });
+  console.log({ pageProps });
   const routeData = pageProps.routeData;
   const seo = (
     <NextSeo
@@ -32,6 +33,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           },
         ],
       }}
+      additionalMetaTags={[
+        {
+          name: "theme-color",
+          content: (routeData && routeData.color) || DefaultMeta.color,
+        },
+      ]}
     />
   );
   return pageProps.customLayout ? ( // Custom page layout escapes the container, keeps seo etc
@@ -51,7 +58,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       style={{ minHeight: "100vh" }}
     >
       {seo}
-      <div className="w-100 mt-5" style={{ maxWidth: "400px" }}>
+      <div className="w-100 mt-5 mb-5" style={{ maxWidth: "400px" }}>
         {pageProps.needsAuthProvider ? ( // Only give us AuthProvider if the page needs it
           <AuthProvider>
             <Component {...pageProps} />
